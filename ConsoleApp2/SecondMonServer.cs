@@ -10,17 +10,27 @@ namespace SecondMonServer{
 
             while (true) {
                 CheckMainTable(fbClient);
-                Thread.Sleep(30 * 1000);
+                Thread.Sleep(10 * 1000);
             }
         }
 
         static void CheckMainTable(FBClient fbClient) {
 			Console.WriteLine("checking main table at: " + DateTime.Now.ToString());
 
-			DataTable dataTable = fbClient.GetMainTable();
-			DateTime now = DateTime.Now;
+			DataTable table;
+			try {
+				table = fbClient.GetMainTable();
+			} catch (Exception e) {
+				Console.WriteLine(e.Message + " @ " + e.StackTrace);
+				return;
+			}
 
-			foreach (DataRow row in dataTable.Rows) {
+			if (table.Rows.Count == 0)
+				return;
+
+			DateTime now = DateTime.Now;
+			
+			foreach (DataRow row in table.Rows) {
 				DateTime dateTime = (DateTime)row["CREATEDATE"];
 				double dateDiff = now.Subtract(dateTime).TotalMinutes;
 				Console.WriteLine("ID: " + row["ID"].ToString() + " - " + dateDiff);
@@ -29,18 +39,57 @@ namespace SecondMonServer{
 
 				if (dateDiff < 30) {
 					Console.WriteLine("Time < 30");
-					DataTable result = fbClient.GetTableTreatComplete(row["SCHEDID"].ToString());
 
-					Console.WriteLine("TreatComplete: '" + result.Rows[0][0] + "'");
-
-					if (result.Rows[0][0].ToString() == "1") {
-						updateCode = 2;
-					} else {
-						CheckPatientBirthdayNear(fbClient, row["PCODE"].ToString());
-
-						updateCode = 1;
+					bool isTreatComplete = false;
+					try {
+						isTreatComplete = fbClient.IsTreatComplete(row["SCHEDID"].ToString());
+					} catch (Exception e) {
+						Console.WriteLine(e.Message + " @ " + e.StackTrace);
+						continue;
 					}
 
+					Console.WriteLine("TreatComplete: '" + isTreatComplete + "'");
+
+					if (isTreatComplete) {
+						updateCode = 2;
+					} else {
+						string messageToUser = "";
+						string pcode = row["PCODE"].ToString();
+
+						bool isBirthday = false;
+						try {
+							isBirthday = IsPatientBirthdayNear(fbClient, pcode);
+						} catch (Exception e) {
+							Console.WriteLine(e.Message + " @ " + e.StackTrace);
+						}
+
+						if (isBirthday)
+							messageToUser += "Birthday\n";
+
+						bool isChild = false;
+						try {
+							isChild = fbClient.IsPatientHasChild(pcode);
+						} catch (Exception e) {
+							Console.WriteLine(e.Message + " @ " + e.StackTrace);
+						}
+
+						if (isChild)
+							messageToUser += "Children\n";
+						
+						if (messageToUser.Equals(""))
+							continue;
+
+						string ipAddress = "";
+						try {
+							string attachId = row["ATTACHMENT"].ToString();
+							ipAddress = fbClient.GetClientIpAddress(attachId);
+							UserNotification.SendNotificationToUser(ipAddress, 8001, messageToUser);
+							updateCode = 1;
+						} catch (Exception e) {
+							Console.WriteLine(e.Message + " @ " + e.StackTrace);
+							updateCode = 4;
+						}
+					}
 				} else {
 					updateCode = 3;
 				}
@@ -50,10 +99,15 @@ namespace SecondMonServer{
 			}
 		}
 		
-        static void CheckPatientBirthdayNear(FBClient fbClient, string pcode) {
-			DataTable table = fbClient.GetTableBirthday(pcode);
+        static bool IsPatientBirthdayNear(FBClient fbClient, string pcode) {
+			DateTime bDay;
+			try {
+				bDay = fbClient.GetBirthdayDate(pcode);
+			} catch (Exception e) {
+				throw e;
+			}
+
 			DateTime now = DateTime.Now;
-			DateTime bDay = (DateTime)table.Rows[0][0];
 			bDay = new DateTime(now.Year, bDay.Month, bDay.Day);
 			TimeSpan dateDiff = DateTime.Now.Subtract(bDay);
 			double daysDiff = dateDiff.TotalDays;
@@ -61,7 +115,9 @@ namespace SecondMonServer{
 			Console.WriteLine("bDay: " + bDay.ToString() + " totalDays: " + daysDiff);
 
 			if (daysDiff >= -7 && daysDiff <= 7)
-				UserNotification.SendNotificationToUser("172.16.166.12", 8001, "birthday");
+				return true;
+
+			return false;
 		}
     }
 }

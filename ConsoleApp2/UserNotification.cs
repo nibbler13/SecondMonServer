@@ -5,7 +5,12 @@ using System.Net.Sockets;
 
 namespace SecondMonServer {
 	class UserNotification {
-		static public void SendNotificationToUser(string address, int port, string message) {
+		static public bool SendNotificationToUser(string address, int port, string message) {
+			if (address.Equals("") ||
+				port.Equals("") ||
+				message.Equals(""))
+				throw new ArgumentNullException("some argument is empty");
+
 			try {
 				TcpClient tcpclnt = new TcpClient();
 				Console.WriteLine("Connecting");
@@ -29,9 +34,14 @@ namespace SecondMonServer {
 
 				tcpclnt.Close();
 
+				if (bb.Length > 0)
+					return true;
+
 			} catch (Exception e) {
 				Console.WriteLine(e.Message + " @ " + e.StackTrace);
 			}
+
+			return false;
 		}
 	}
 }
