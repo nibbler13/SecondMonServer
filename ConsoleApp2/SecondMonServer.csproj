@@ -46,8 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FBClient.cs" />
     <Compile Include="SecondMonServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserNotification.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
