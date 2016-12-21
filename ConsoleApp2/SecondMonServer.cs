@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Threading;
+using System.Text;
 
 namespace SecondMonServer{
     class SecondMonServer {
@@ -53,42 +54,38 @@ namespace SecondMonServer{
 					if (isTreatComplete) {
 						updateCode = 2;
 					} else {
-						string messageToUser = "";
 						string pcode = row["PCODE"].ToString();
 
 						bool isBirthday = false;
-						try {
-							isBirthday = IsPatientBirthdayNear(fbClient, pcode);
-						} catch (Exception e) {
-							Console.WriteLine(e.Message + " @ " + e.StackTrace);
-						}
-
-						if (isBirthday)
-							messageToUser += "Birthday\n";
+						try { isBirthday = IsPatientBirthdayNear(fbClient, pcode);
+						} catch (Exception e) { Console.WriteLine(e.Message + " @ " + e.StackTrace); }
 
 						bool isChild = false;
-						try {
-							isChild = fbClient.IsPatientHasChild(pcode);
-						} catch (Exception e) {
-							Console.WriteLine(e.Message + " @ " + e.StackTrace);
-						}
+						try { isChild = fbClient.IsPatientHasChild(pcode);
+						} catch (Exception e) { Console.WriteLine(e.Message + " @ " + e.StackTrace); }
 
-						if (isChild)
-							messageToUser += "Children\n";
-						
-						if (messageToUser.Equals(""))
+						if (!isBirthday && !isChild)
 							continue;
 
 						string ipAddress = "";
 						try {
 							string attachId = row["ATTACHMENT"].ToString();
 							ipAddress = fbClient.GetClientIpAddress(attachId);
-							UserNotification.SendNotificationToUser(ipAddress, 8001, messageToUser);
-							updateCode = 1;
 						} catch (Exception e) {
 							Console.WriteLine(e.Message + " @ " + e.StackTrace);
 							updateCode = 4;
 						}
+
+						if (ipAddress.Equals(""))
+							continue;
+
+						if (isBirthday)
+							SendNorification(ipAddress, 8001, Notification.AvailableTypes.bday);
+
+						if (isChild)
+							SendNorification(ipAddress, 8001, Notification.AvailableTypes.child);
+
+						updateCode = 1;
 					}
 				} else {
 					updateCode = 3;
@@ -98,8 +95,15 @@ namespace SecondMonServer{
 					fbClient.ExecuteUpdateQuery(updateCode.ToString(), row["ID"].ToString());
 			}
 		}
+
+		private static bool SendNorification(string ipAddress, int port, Notification.AvailableTypes type) {
+			byte[] sendValue = Encoding.Unicode.GetBytes(new Notification(type).ToString());
+			UserNotification.SendNotificationToUser(ipAddress, port, sendValue);
+
+			return true;
+		}
 		
-        static bool IsPatientBirthdayNear(FBClient fbClient, string pcode) {
+        private static bool IsPatientBirthdayNear(FBClient fbClient, string pcode) {
 			DateTime bDay;
 			try {
 				bDay = fbClient.GetBirthdayDate(pcode);

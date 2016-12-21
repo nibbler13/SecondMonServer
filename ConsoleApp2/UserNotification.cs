@@ -5,34 +5,35 @@ using System.Net.Sockets;
 
 namespace SecondMonServer {
 	class UserNotification {
-		static public bool SendNotificationToUser(string address, int port, string message) {
+		static public bool SendNotificationToUser(string address, int port, byte[] message) {
 			if (address.Equals("") ||
 				port.Equals("") ||
 				message.Equals(""))
 				throw new ArgumentNullException("some argument is empty");
 
 			try {
-				TcpClient tcpclnt = new TcpClient();
+				TcpClient tcpClient = new TcpClient();
 				Console.WriteLine("Connecting");
 
-				tcpclnt.Connect(address, port);
+				tcpClient.Connect(address, port);
 				Console.WriteLine("Connected");
-				Console.WriteLine("String to be transmitted: " + message);
+				Console.WriteLine("Message length to be transmitted: " + message.Length);
 				
-				Stream stm = tcpclnt.GetStream();
+				Stream stm = tcpClient.GetStream();
 
-				ASCIIEncoding asen = new ASCIIEncoding();
-				byte[] ba = asen.GetBytes(message);
 				Console.WriteLine("transmitting");
 
-				stm.Write(ba, 0, ba.Length);
+				byte[] length = BitConverter.GetBytes(message.Length);
+
+				stm.Write(length, 0, 4);
+				stm.Write(message, 0, message.Length);
 
 				byte[] bb = new byte[100];
 				int k = stm.Read(bb, 0, 100);
 
 				Console.WriteLine(Encoding.Default.GetString(bb));
 
-				tcpclnt.Close();
+				tcpClient.Close();
 
 				if (bb.Length > 0)
 					return true;
