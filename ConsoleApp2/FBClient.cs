@@ -1,132 +1,70 @@
 ﻿using System;
-using FirebirdSql.Data.FirebirdClient;
 using System.Data;
+using System.Collections.Generic;
+using FirebirdSql.Data.FirebirdClient;
 
 namespace SecondMonServer {
     class FBClient {
         private FbConnection connection;
-		private string queryBDay;
-		private string queryTreatComplete;
-		private string queryMain;
-		private string queryFamily;
-		private string queryIpAddress;
 
-		public FBClient(string dataSource, string dataBase) {
-            FbConnectionStringBuilder cs = new FbConnectionStringBuilder();
-            cs.DataSource = dataSource;
-            cs.Database = dataBase;
+		public FBClient(string ipAddress, string baseName) {
+			LoggingSystem.LogMessageToFile("Creating connection to FBBase: " + 
+				ipAddress + ":" + baseName);
+
+			FbConnectionStringBuilder cs = new FbConnectionStringBuilder();
+            cs.DataSource = ipAddress;
+            cs.Database = baseName;
             cs.UserID = "SYSDBA";
             cs.Password = "masterkey";
             cs.Charset = "NONE";
             cs.Pooling = false;
 
-            string fbConnectionString = cs.ToString();
-
-            connection = new FbConnection(fbConnectionString);
-
-			queryBDay = "Select BDate From Clients Where PCode = @pcode";
-			queryTreatComplete = "Select TreatComplete From Schedule Where SchedId = @schedid";
-			queryMain = "SELECT * FROM SecondMon WHERE Send = 0";
-			queryFamily = "Select Count(*) From Clients Where HFamily = @pcode And (Select * From HowOld (BDate))<18";
-			queryIpAddress = "Select Mon$Remote_Address From Mon$Attachments Where Mon$Attachment_Id = @attachId";
+            connection = new FbConnection(cs.ToString());
 		}
 
-		public DateTime GetBirthdayDate(string pcode) {
-			if (pcode.Equals(""))
-				throw new ArgumentNullException("pcode is empty");
+		public DataTable GetDataTable(string query, Dictionary<string, string> parameters) {
+			DataTable dataTable = new DataTable();
 
-			DataTable table = GetDataTable(queryBDay.Replace("@pcode", pcode));
-			if (table == null)
-				throw new NullReferenceException("birthday table is null");
-
-			DateTime date = (DateTime)table.Rows[0][0];
-
-			return date;
-		}
-
-		public DataTable GetMainTable() {
-			DataTable table = GetDataTable(queryMain);
-
-			if (table == null)
-				throw new NullReferenceException("main table is null");
-
-			return table;
-		}
-
-		public bool IsTreatComplete(string schedId) {
-			if (schedId.Equals(""))
-				throw new ArgumentNullException("schedid is empty");
-
-			DataTable table = GetDataTable(queryTreatComplete.Replace("@schedid", schedId));
-			if (table == null)
-				throw new NullReferenceException("treatcomplete table is null");
-
-			if (table.Rows[0][0].ToString().Equals("1"))
-				return true;
-
-			return false;
-		}
-
-		public bool IsPatientHasChild(string pcode) {
-			if (pcode.Equals(""))
-				throw new ArgumentNullException("pcode is empty");
-
-			DataTable table = GetDataTable(queryFamily.Replace("@pcode", pcode));
-
-			if (table == null)
-				throw new NullReferenceException("child table is null");
-
-			if (Int16.Parse(table.Rows[0][0].ToString()) > 0)
-				return true;
-
-			return false;
-		}
-
-		public string GetClientIpAddress(string attachId) {
-			if (attachId.Equals(""))
-				throw new ArgumentNullException("attachId is empty");
-
-			DataTable table = GetDataTable(queryIpAddress.Replace("@attachId", attachId));
-			if (table == null)
-				throw new NullReferenceException("remoteAddress table is null");
-			
-			return table.Rows[0][0].ToString();
-		}
-
-        public DataTable GetDataTable(string query) {
 			try {
 				connection.Open();
 				FbCommand command = new FbCommand(query, connection);
-				DataTable dataTable = new DataTable();
+				
+				if (parameters.Count > 0)
+					foreach (KeyValuePair<string, string> parameter in parameters)
+						command.Parameters.AddWithValue(parameter.Key, parameter.Value);
+
 				FbDataAdapter fbDataAdapter = new FbDataAdapter(command);
 				fbDataAdapter.Fill(dataTable);
-				connection.Close();
-
-				return dataTable;
 			} catch (Exception e) {
-				Console.WriteLine(e.Message + " @ " + e.StackTrace);
+				LoggingSystem.LogMessageToFile("Cannot getDataTable, query: " + query + 
+					Environment.NewLine + e.Message + " @ " + e.StackTrace);
+			} finally {
+				connection.Close();
 			}
 
-			return null;
-        }
+			return dataTable;
+		}
 
-        public bool ExecuteUpdateQuery(string updateCode, string id) {
+		public bool ExecuteUpdateQuery(string query, Dictionary<string, string> parameters) {
+			bool updated = false;
 			try {
 				connection.Open();
-				string queryUpdate = "Update SecondMon Set Send = @updateCode Where Id = @id";
-				FbCommand update = new FbCommand(queryUpdate, connection);
-				update.Parameters.AddWithValue("@updateCode", updateCode);
-				update.Parameters.AddWithValue("@id", id);
-				int updated = update.ExecuteNonQuery();
-				connection.Close();
+				FbCommand update = new FbCommand(query, connection);
 
-				if (updated > 0)
-					return true;
+				if (parameters.Count > 0) {
+					foreach (KeyValuePair<string, string> parameter in parameters)
+						update.Parameters.AddWithValue(parameter.Key, parameter.Value);
+				}
+
+				updated = update.ExecuteNonQuery() > 0 ? true : false;
 			} catch (Exception e) {
-				Console.WriteLine(e.Message + " @ " + e.StackTrace);
+				LoggingSystem.LogMessageToFile("Cannot executeUpdateQuery: " + query + 
+					Environment.NewLine + e.Message + " @ " + e.StackTrace);
+			} finally {
+				connection.Close();
 			}
 
-			return false;
+			return updated;
 		}
     }
 }

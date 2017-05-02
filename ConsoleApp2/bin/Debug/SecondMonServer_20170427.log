@@ -1,0 +1,255 @@
+27.04.2017 14:30:50: Starting
+27.04.2017 14:30:50: Creating CheckEventsSystem
+27.04.2017 14:30:51: Creating connection to FBBase: 172.16.166.2:nnkk
+27.04.2017 14:30:51: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 14:30:54: Creating notification: Title: День рождения
+Body: У текущего пациента день рождения находится в промежутке +/- 7 дней. Не забудьте поставить скидку 10% в лечениях за наличный расчет
+ColorExclamationBlinking: 7DD474
+ColorMain: DCFFD8
+27.04.2017 14:30:57: Creating notification: Title: День рождения
+Body: У текущего пациента день рождения находится в промежутке +/- 7 дней. Не забудьте поставить скидку 10% в лечениях за наличный расчет
+ColorExclamationBlinking: 7DD474
+ColorMain: DCFFD8
+27.04.2017 14:31:07: Creating notification: Title: День рождения
+Body: У текущего пациента день рождения находится в промежутке +/- 7 дней. Не забудьте поставить скидку 10% в лечениях за наличный расчет
+ColorExclamationBlinking: 7DD474
+ColorMain: DCFFD8
+27.04.2017 14:33:39: Starting
+27.04.2017 14:33:39: Creating CheckEventsSystem
+27.04.2017 14:33:39: Creating connection to FBBase: 172.16.166.2:nnkk
+27.04.2017 14:33:39: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 14:34:14: Starting
+27.04.2017 14:34:14: Creating CheckEventsSystem
+27.04.2017 14:34:15: Creating connection to FBBase: 172.16.166.2:nnkks
+27.04.2017 14:34:15: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 14:34:15: Cannot getDataTable, query: SELECT smonid, pcode, treatcode, addr, pid FROM (SELECT sm.*, s.treatcode AS streatcode, s.treatcomplete, mon.mon$remote_address AS addr, mon.mon$remote_pid AS pid, CASE WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 0 THEN 0 WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 1 THEN 1 WHEN s.treatcode IS NULL THEN 0 END AS flag FROM secondmon sm LEFT JOIN schedule s ON s.treatcode = sm.treatcode JOIN mon$attachments mon ON mon.mon$attachment_id = sm.attachid WHERE CAST (sm.creatdate AS date) = 'today' AND(CAST ('now' AS time) - (CAST (sm.creatdate AS time)) < 301)) WHERE flag = 0 AND send = 0 | I/O error during "open" operation for file "nnkks"
+Error while trying to open file @    в FirebirdSql.Data.FirebirdClient.FbConnectionInternal.Connect() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnectionInternal.cs:строка 196
+   в FirebirdSql.Data.FirebirdClient.FbConnection.Open() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnection.cs:строка 534
+   в SecondMonServer.FBClient.GetDataTable(String query) в \\nnkk-fs\doks\nn-admin\Мои документы\Visual Studio 2017\Projects\SecondMonServer\ConsoleApp2\FBClient.cs:строка 27
+27.04.2017 14:35:34: Starting
+27.04.2017 14:35:34: Creating CheckEventsSystem
+27.04.2017 14:35:34: Creating connection to FBBase: 172.16.166.2:nnkks
+27.04.2017 14:35:34: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 14:35:34: Cannot getDataTable, query: SELECT smonid, pcode, treatcode, addr, pid FROM (SELECT sm.*, s.treatcode AS streatcode, s.treatcomplete, mon.mon$remote_address AS addr, mon.mon$remote_pid AS pid, CASE WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 0 THEN 0 WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 1 THEN 1 WHEN s.treatcode IS NULL THEN 0 END AS flag FROM secondmon sm LEFT JOIN schedule s ON s.treatcode = sm.treatcode JOIN mon$attachments mon ON mon.mon$attachment_id = sm.attachid WHERE CAST (sm.creatdate AS date) = 'today' AND(CAST ('now' AS time) - (CAST (sm.creatdate AS time)) < 301)) WHERE flag = 0 AND send = 0 | I/O error during "open" operation for file "nnkks"
+Error while trying to open file @    в FirebirdSql.Data.FirebirdClient.FbConnectionInternal.Connect() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnectionInternal.cs:строка 196
+   в FirebirdSql.Data.FirebirdClient.FbConnection.Open() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnection.cs:строка 534
+   в SecondMonServer.FBClient.GetDataTable(String query) в \\nnkk-fs\doks\nn-admin\Мои документы\Visual Studio 2017\Projects\SecondMonServer\ConsoleApp2\FBClient.cs:строка 27
+27.04.2017 14:35:56: Starting
+27.04.2017 14:35:56: Creating CheckEventsSystem
+27.04.2017 14:35:57: Creating connection to FBBase: 172.16.166.2:nnkks
+27.04.2017 14:35:57: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 14:35:57: Cannot getDataTable, query: SELECT smonid, pcode, treatcode, addr, pid FROM (SELECT sm.*, s.treatcode AS streatcode, s.treatcomplete, mon.mon$remote_address AS addr, mon.mon$remote_pid AS pid, CASE WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 0 THEN 0 WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 1 THEN 1 WHEN s.treatcode IS NULL THEN 0 END AS flag FROM secondmon sm LEFT JOIN schedule s ON s.treatcode = sm.treatcode JOIN mon$attachments mon ON mon.mon$attachment_id = sm.attachid WHERE CAST (sm.creatdate AS date) = 'today' AND(CAST ('now' AS time) - (CAST (sm.creatdate AS time)) < 301)) WHERE flag = 0 AND send = 0 | I/O error during "open" operation for file "nnkks"
+Error while trying to open file @    в FirebirdSql.Data.FirebirdClient.FbConnectionInternal.Connect() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnectionInternal.cs:строка 196
+   в FirebirdSql.Data.FirebirdClient.FbConnection.Open() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnection.cs:строка 534
+   в SecondMonServer.FBClient.GetDataTable(String query) в \\nnkk-fs\doks\nn-admin\Мои документы\Visual Studio 2017\Projects\SecondMonServer\ConsoleApp2\FBClient.cs:строка 27
+27.04.2017 14:36:25: Starting
+27.04.2017 14:36:25: Creating CheckEventsSystem
+27.04.2017 14:36:25: Creating connection to FBBase: 172.16.166.2:nnkks
+27.04.2017 14:36:25: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 14:36:26: Cannot getDataTable, query: SELECT smonid, pcode, treatcode, addr, pid FROM (SELECT sm.*, s.treatcode AS streatcode, s.treatcomplete, mon.mon$remote_address AS addr, mon.mon$remote_pid AS pid, CASE WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 0 THEN 0 WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 1 THEN 1 WHEN s.treatcode IS NULL THEN 0 END AS flag FROM secondmon sm LEFT JOIN schedule s ON s.treatcode = sm.treatcode JOIN mon$attachments mon ON mon.mon$attachment_id = sm.attachid WHERE CAST (sm.creatdate AS date) = 'today' AND(CAST ('now' AS time) - (CAST (sm.creatdate AS time)) < 301)) WHERE flag = 0 AND send = 0 | I/O error during "open" operation for file "nnkks"
+Error while trying to open file @    в FirebirdSql.Data.FirebirdClient.FbConnectionInternal.Connect() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnectionInternal.cs:строка 196
+   в FirebirdSql.Data.FirebirdClient.FbConnection.Open() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnection.cs:строка 534
+   в SecondMonServer.FBClient.GetDataTable(String query) в \\nnkk-fs\doks\nn-admin\Мои документы\Visual Studio 2017\Projects\SecondMonServer\ConsoleApp2\FBClient.cs:строка 27
+27.04.2017 14:36:39: Starting
+27.04.2017 14:36:39: Creating CheckEventsSystem
+27.04.2017 14:36:39: Creating connection to FBBase: 172.16.166.2:nnkks
+27.04.2017 14:36:40: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 14:36:40: Cannot getDataTable, query: SELECT smonid, pcode, treatcode, addr, pid FROM (SELECT sm.*, s.treatcode AS streatcode, s.treatcomplete, mon.mon$remote_address AS addr, mon.mon$remote_pid AS pid, CASE WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 0 THEN 0 WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 1 THEN 1 WHEN s.treatcode IS NULL THEN 0 END AS flag FROM secondmon sm LEFT JOIN schedule s ON s.treatcode = sm.treatcode JOIN mon$attachments mon ON mon.mon$attachment_id = sm.attachid WHERE CAST (sm.creatdate AS date) = 'today' AND(CAST ('now' AS time) - (CAST (sm.creatdate AS time)) < 301)) WHERE flag = 0 AND send = 0 | I/O error during "open" operation for file "nnkks"
+Error while trying to open file @    в FirebirdSql.Data.FirebirdClient.FbConnectionInternal.Connect() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnectionInternal.cs:строка 196
+   в FirebirdSql.Data.FirebirdClient.FbConnection.Open() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnection.cs:строка 534
+   в SecondMonServer.FBClient.GetDataTable(String query) в \\nnkk-fs\doks\nn-admin\Мои документы\Visual Studio 2017\Projects\SecondMonServer\ConsoleApp2\FBClient.cs:строка 27
+27.04.2017 14:36:50: Cannot getDataTable, query: SELECT smonid, pcode, treatcode, addr, pid FROM (SELECT sm.*, s.treatcode AS streatcode, s.treatcomplete, mon.mon$remote_address AS addr, mon.mon$remote_pid AS pid, CASE WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 0 THEN 0 WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 1 THEN 1 WHEN s.treatcode IS NULL THEN 0 END AS flag FROM secondmon sm LEFT JOIN schedule s ON s.treatcode = sm.treatcode JOIN mon$attachments mon ON mon.mon$attachment_id = sm.attachid WHERE CAST (sm.creatdate AS date) = 'today' AND(CAST ('now' AS time) - (CAST (sm.creatdate AS time)) < 301)) WHERE flag = 0 AND send = 0 | I/O error during "open" operation for file "nnkks"
+Error while trying to open file @    в FirebirdSql.Data.FirebirdClient.FbConnectionInternal.Connect() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnectionInternal.cs:строка 196
+   в FirebirdSql.Data.FirebirdClient.FbConnection.Open() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnection.cs:строка 534
+   в SecondMonServer.FBClient.GetDataTable(String query) в \\nnkk-fs\doks\nn-admin\Мои документы\Visual Studio 2017\Projects\SecondMonServer\ConsoleApp2\FBClient.cs:строка 27
+27.04.2017 14:37:02: Cannot getDataTable, query: SELECT smonid, pcode, treatcode, addr, pid FROM (SELECT sm.*, s.treatcode AS streatcode, s.treatcomplete, mon.mon$remote_address AS addr, mon.mon$remote_pid AS pid, CASE WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 0 THEN 0 WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 1 THEN 1 WHEN s.treatcode IS NULL THEN 0 END AS flag FROM secondmon sm LEFT JOIN schedule s ON s.treatcode = sm.treatcode JOIN mon$attachments mon ON mon.mon$attachment_id = sm.attachid WHERE CAST (sm.creatdate AS date) = 'today' AND(CAST ('now' AS time) - (CAST (sm.creatdate AS time)) < 301)) WHERE flag = 0 AND send = 0 | I/O error during "open" operation for file "nnkks"
+Error while trying to open file @    в FirebirdSql.Data.FirebirdClient.FbConnectionInternal.Connect() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnectionInternal.cs:строка 196
+   в FirebirdSql.Data.FirebirdClient.FbConnection.Open() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnection.cs:строка 534
+   в SecondMonServer.FBClient.GetDataTable(String query) в \\nnkk-fs\doks\nn-admin\Мои документы\Visual Studio 2017\Projects\SecondMonServer\ConsoleApp2\FBClient.cs:строка 27
+27.04.2017 14:38:26: Starting
+27.04.2017 14:38:26: Creating CheckEventsSystem
+27.04.2017 14:38:26: Creating connection to FBBase: 172.16.166.2:nnkks
+27.04.2017 14:38:26: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 14:38:27: Cannot getDataTable, query: SELECT smonid, pcode, treatcode, addr, pid FROM (SELECT sm.*, s.treatcode AS streatcode, s.treatcomplete, mon.mon$remote_address AS addr, mon.mon$remote_pid AS pid, CASE WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 0 THEN 0 WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 1 THEN 1 WHEN s.treatcode IS NULL THEN 0 END AS flag FROM secondmon sm LEFT JOIN schedule s ON s.treatcode = sm.treatcode JOIN mon$attachments mon ON mon.mon$attachment_id = sm.attachid WHERE CAST (sm.creatdate AS date) = 'today' AND(CAST ('now' AS time) - (CAST (sm.creatdate AS time)) < 301)) WHERE flag = 0 AND send = 0
+I/O error during "open" operation for file "nnkks"
+Error while trying to open file @    в FirebirdSql.Data.FirebirdClient.FbConnectionInternal.Connect() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnectionInternal.cs:строка 196
+   в FirebirdSql.Data.FirebirdClient.FbConnection.Open() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnection.cs:строка 534
+   в SecondMonServer.FBClient.GetDataTable(String query) в \\nnkk-fs\doks\nn-admin\Мои документы\Visual Studio 2017\Projects\SecondMonServer\ConsoleApp2\FBClient.cs:строка 27
+27.04.2017 14:38:37: Cannot getDataTable, query: SELECT smonid, pcode, treatcode, addr, pid FROM (SELECT sm.*, s.treatcode AS streatcode, s.treatcomplete, mon.mon$remote_address AS addr, mon.mon$remote_pid AS pid, CASE WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 0 THEN 0 WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 1 THEN 1 WHEN s.treatcode IS NULL THEN 0 END AS flag FROM secondmon sm LEFT JOIN schedule s ON s.treatcode = sm.treatcode JOIN mon$attachments mon ON mon.mon$attachment_id = sm.attachid WHERE CAST (sm.creatdate AS date) = 'today' AND(CAST ('now' AS time) - (CAST (sm.creatdate AS time)) < 301)) WHERE flag = 0 AND send = 0
+I/O error during "open" operation for file "nnkks"
+Error while trying to open file @    в FirebirdSql.Data.FirebirdClient.FbConnectionInternal.Connect() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnectionInternal.cs:строка 196
+   в FirebirdSql.Data.FirebirdClient.FbConnection.Open() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnection.cs:строка 534
+   в SecondMonServer.FBClient.GetDataTable(String query) в \\nnkk-fs\doks\nn-admin\Мои документы\Visual Studio 2017\Projects\SecondMonServer\ConsoleApp2\FBClient.cs:строка 27
+27.04.2017 14:38:47: Cannot getDataTable, query: SELECT smonid, pcode, treatcode, addr, pid FROM (SELECT sm.*, s.treatcode AS streatcode, s.treatcomplete, mon.mon$remote_address AS addr, mon.mon$remote_pid AS pid, CASE WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 0 THEN 0 WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 1 THEN 1 WHEN s.treatcode IS NULL THEN 0 END AS flag FROM secondmon sm LEFT JOIN schedule s ON s.treatcode = sm.treatcode JOIN mon$attachments mon ON mon.mon$attachment_id = sm.attachid WHERE CAST (sm.creatdate AS date) = 'today' AND(CAST ('now' AS time) - (CAST (sm.creatdate AS time)) < 301)) WHERE flag = 0 AND send = 0
+I/O error during "open" operation for file "nnkks"
+Error while trying to open file @    в FirebirdSql.Data.FirebirdClient.FbConnectionInternal.Connect() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnectionInternal.cs:строка 196
+   в FirebirdSql.Data.FirebirdClient.FbConnection.Open() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnection.cs:строка 534
+   в SecondMonServer.FBClient.GetDataTable(String query) в \\nnkk-fs\doks\nn-admin\Мои документы\Visual Studio 2017\Projects\SecondMonServer\ConsoleApp2\FBClient.cs:строка 27
+27.04.2017 14:39:47: Starting, cycle interval in seconds: 10
+27.04.2017 14:39:47: Creating CheckEventsSystem
+27.04.2017 14:39:47: Creating connection to FBBase: 172.16.166.2:nnkks
+27.04.2017 14:39:47: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 14:39:47: Cannot getDataTable, query: SELECT smonid, pcode, treatcode, addr, pid FROM (SELECT sm.*, s.treatcode AS streatcode, s.treatcomplete, mon.mon$remote_address AS addr, mon.mon$remote_pid AS pid, CASE WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 0 THEN 0 WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 1 THEN 1 WHEN s.treatcode IS NULL THEN 0 END AS flag FROM secondmon sm LEFT JOIN schedule s ON s.treatcode = sm.treatcode JOIN mon$attachments mon ON mon.mon$attachment_id = sm.attachid WHERE CAST (sm.creatdate AS date) = 'today' AND(CAST ('now' AS time) - (CAST (sm.creatdate AS time)) < 301)) WHERE flag = 0 AND send = 0
+I/O error during "open" operation for file "nnkks"
+Error while trying to open file @    в FirebirdSql.Data.FirebirdClient.FbConnectionInternal.Connect() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnectionInternal.cs:строка 196
+   в FirebirdSql.Data.FirebirdClient.FbConnection.Open() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnection.cs:строка 534
+   в SecondMonServer.FBClient.GetDataTable(String query) в \\nnkk-fs\doks\nn-admin\Мои документы\Visual Studio 2017\Projects\SecondMonServer\ConsoleApp2\FBClient.cs:строка 27
+27.04.2017 14:39:58: Cannot getDataTable, query: SELECT smonid, pcode, treatcode, addr, pid FROM (SELECT sm.*, s.treatcode AS streatcode, s.treatcomplete, mon.mon$remote_address AS addr, mon.mon$remote_pid AS pid, CASE WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 0 THEN 0 WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 1 THEN 1 WHEN s.treatcode IS NULL THEN 0 END AS flag FROM secondmon sm LEFT JOIN schedule s ON s.treatcode = sm.treatcode JOIN mon$attachments mon ON mon.mon$attachment_id = sm.attachid WHERE CAST (sm.creatdate AS date) = 'today' AND(CAST ('now' AS time) - (CAST (sm.creatdate AS time)) < 301)) WHERE flag = 0 AND send = 0
+I/O error during "open" operation for file "nnkks"
+Error while trying to open file @    в FirebirdSql.Data.FirebirdClient.FbConnectionInternal.Connect() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnectionInternal.cs:строка 196
+   в FirebirdSql.Data.FirebirdClient.FbConnection.Open() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnection.cs:строка 534
+   в SecondMonServer.FBClient.GetDataTable(String query) в \\nnkk-fs\doks\nn-admin\Мои документы\Visual Studio 2017\Projects\SecondMonServer\ConsoleApp2\FBClient.cs:строка 27
+27.04.2017 14:40:08: Cannot getDataTable, query: SELECT smonid, pcode, treatcode, addr, pid FROM (SELECT sm.*, s.treatcode AS streatcode, s.treatcomplete, mon.mon$remote_address AS addr, mon.mon$remote_pid AS pid, CASE WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 0 THEN 0 WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 1 THEN 1 WHEN s.treatcode IS NULL THEN 0 END AS flag FROM secondmon sm LEFT JOIN schedule s ON s.treatcode = sm.treatcode JOIN mon$attachments mon ON mon.mon$attachment_id = sm.attachid WHERE CAST (sm.creatdate AS date) = 'today' AND(CAST ('now' AS time) - (CAST (sm.creatdate AS time)) < 301)) WHERE flag = 0 AND send = 0
+I/O error during "open" operation for file "nnkks"
+Error while trying to open file @    в FirebirdSql.Data.FirebirdClient.FbConnectionInternal.Connect() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnectionInternal.cs:строка 196
+   в FirebirdSql.Data.FirebirdClient.FbConnection.Open() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnection.cs:строка 534
+   в SecondMonServer.FBClient.GetDataTable(String query) в \\nnkk-fs\doks\nn-admin\Мои документы\Visual Studio 2017\Projects\SecondMonServer\ConsoleApp2\FBClient.cs:строка 27
+27.04.2017 14:40:18: Cannot getDataTable, query: SELECT smonid, pcode, treatcode, addr, pid FROM (SELECT sm.*, s.treatcode AS streatcode, s.treatcomplete, mon.mon$remote_address AS addr, mon.mon$remote_pid AS pid, CASE WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 0 THEN 0 WHEN s.treatcode IS NOT NULL AND COALESCE(treatcomplete,0) = 1 THEN 1 WHEN s.treatcode IS NULL THEN 0 END AS flag FROM secondmon sm LEFT JOIN schedule s ON s.treatcode = sm.treatcode JOIN mon$attachments mon ON mon.mon$attachment_id = sm.attachid WHERE CAST (sm.creatdate AS date) = 'today' AND(CAST ('now' AS time) - (CAST (sm.creatdate AS time)) < 301)) WHERE flag = 0 AND send = 0
+I/O error during "open" operation for file "nnkks"
+Error while trying to open file @    в FirebirdSql.Data.FirebirdClient.FbConnectionInternal.Connect() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnectionInternal.cs:строка 196
+   в FirebirdSql.Data.FirebirdClient.FbConnection.Open() в C:\Users\Jiri\Documents\devel\NETProvider\working\Provider\src\FirebirdSql.Data.FirebirdClient\FirebirdClient\FbConnection.cs:строка 534
+   в SecondMonServer.FBClient.GetDataTable(String query) в \\nnkk-fs\doks\nn-admin\Мои документы\Visual Studio 2017\Projects\SecondMonServer\ConsoleApp2\FBClient.cs:строка 27
+27.04.2017 14:40:38: Starting, cycle interval in seconds: 10
+27.04.2017 14:40:38: Creating CheckEventsSystem
+27.04.2017 14:40:38: Creating connection to FBBase: 172.16.166.2:nnkk
+27.04.2017 14:40:38: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 15:37:59: Starting, cycle interval in seconds: 10
+27.04.2017 15:37:59: Creating CheckEventsSystem
+27.04.2017 15:38:00: Creating connection to FBBase: 172.16.166.2:nnkk
+27.04.2017 15:38:00: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 15:38:01: Creating notification: ipAddress: 172.16.166.135 misPID: 2520
+Title: День рождения
+Body: У текущего пациента день рождения находится в промежутке +/- 7 дней. Не забудьте поставить скидку 10% в лечениях за наличный расчет
+ColorExclamationBlinking: 7DD474
+ColorMain: DCFFD8
+27.04.2017 15:38:03: Creating notification: ipAddress: 172.16.166.135 misPID: 2520
+Title: День рождения
+Body: У текущего пациента день рождения находится в промежутке +/- 7 дней. Не забудьте поставить скидку 10% в лечениях за наличный расчет
+ColorExclamationBlinking: 7DD474
+ColorMain: DCFFD8
+27.04.2017 15:38:03: Creating notification: ipAddress: 172.16.166.136 misPID: 5344
+Title: День рождения
+Body: У текущего пациента день рождения находится в промежутке +/- 7 дней. Не забудьте поставить скидку 10% в лечениях за наличный расчет
+ColorExclamationBlinking: 7DD474
+ColorMain: DCFFD8
+27.04.2017 15:38:03: Creating notification: ipAddress: 172.16.166.50 misPID: 3252
+Title: День рождения
+Body: У текущего пациента день рождения находится в промежутке +/- 7 дней. Не забудьте поставить скидку 10% в лечениях за наличный расчет
+ColorExclamationBlinking: 7DD474
+ColorMain: DCFFD8
+27.04.2017 15:38:03: Creating notification: ipAddress: 172.16.166.78 misPID: 3688
+Title: День рождения
+Body: У текущего пациента день рождения находится в промежутке +/- 7 дней. Не забудьте поставить скидку 10% в лечениях за наличный расчет
+ColorExclamationBlinking: 7DD474
+ColorMain: DCFFD8
+27.04.2017 15:38:04: Creating notification: ipAddress: 172.16.166.231 misPID: 596
+Title: День рождения
+Body: У текущего пациента день рождения находится в промежутке +/- 7 дней. Не забудьте поставить скидку 10% в лечениях за наличный расчет
+ColorExclamationBlinking: 7DD474
+ColorMain: DCFFD8
+27.04.2017 15:39:56: Creating notification: ipAddress: 172.16.166.135 misPID: 2520
+Title: День рождения
+Body: У текущего пациента день рождения находится в промежутке +/- 7 дней. Не забудьте поставить скидку 10% в лечениях за наличный расчет
+ColorExclamationBlinking: 7DD474
+ColorMain: DCFFD8
+27.04.2017 15:40:07: Creating notification: ipAddress: 172.16.166.41 misPID: 900
+Title: День рождения
+Body: У текущего пациента день рождения находится в промежутке +/- 7 дней. Не забудьте поставить скидку 10% в лечениях за наличный расчет
+ColorExclamationBlinking: 7DD474
+ColorMain: DCFFD8
+27.04.2017 15:40:48: Creating notification: ipAddress: 172.16.166.12 misPID: 7364
+Title: День рождения
+Body: У текущего пациента день рождения находится в промежутке +/- 7 дней. Не забудьте поставить скидку 10% в лечениях за наличный расчет
+ColorExclamationBlinking: 7DD474
+ColorMain: DCFFD8
+27.04.2017 15:40:58: Creating notification: ipAddress: 172.16.166.135 misPID: 2520
+Title: День рождения
+Body: У текущего пациента день рождения находится в промежутке +/- 7 дней. Не забудьте поставить скидку 10% в лечениях за наличный расчет
+ColorExclamationBlinking: 7DD474
+ColorMain: DCFFD8
+27.04.2017 15:43:01: Creating notification: ipAddress: 172.16.166.135 misPID: 2520
+Title: День рождения
+Body: У текущего пациента день рождения находится в промежутке +/- 7 дней. Не забудьте поставить скидку 10% в лечениях за наличный расчет
+ColorExclamationBlinking: 7DD474
+ColorMain: DCFFD8
+27.04.2017 15:44:12: Creating notification: ipAddress: 172.16.166.135 misPID: 2520
+Title: День рождения
+Body: У текущего пациента день рождения находится в промежутке +/- 7 дней. Не забудьте поставить скидку 10% в лечениях за наличный расчет
+ColorExclamationBlinking: 7DD474
+ColorMain: DCFFD8
+27.04.2017 15:45:13: Creating notification: ipAddress: 172.16.166.135 misPID: 2520
+Title: День рождения
+Body: У текущего пациента день рождения находится в промежутке +/- 7 дней. Не забудьте поставить скидку 10% в лечениях за наличный расчет
+ColorExclamationBlinking: 7DD474
+ColorMain: DCFFD8
+27.04.2017 16:27:34: Starting, cycle interval in seconds: 10
+27.04.2017 16:27:34: Creating CheckEventsSystem
+27.04.2017 16:27:35: Creating connection to FBBase: 172.16.166.2:nnkk
+27.04.2017 16:27:35: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 16:38:54: Starting, cycle interval in seconds: 10
+27.04.2017 16:38:54: Creating CheckEventsSystem
+27.04.2017 16:38:54: Creating connection to FBBase: 172.16.166.2:nnkk
+27.04.2017 16:38:55: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 16:41:15: Starting, cycle interval in seconds: 10
+27.04.2017 16:41:15: Creating CheckEventsSystem
+27.04.2017 16:41:15: Creating connection to FBBase: 172.16.166.2:nnkk
+27.04.2017 16:41:15: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 16:42:23: Starting, cycle interval in seconds: 10
+27.04.2017 16:42:23: Creating CheckEventsSystem
+27.04.2017 16:42:23: Creating connection to FBBase: 172.16.166.2:nnkk
+27.04.2017 16:42:23: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 16:45:42: Starting, cycle interval in seconds: 10
+27.04.2017 16:45:42: Creating CheckEventsSystem
+27.04.2017 16:45:42: Creating connection to FBBase: 172.16.166.2:nnkk
+27.04.2017 16:45:42: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 16:46:51: Starting, cycle interval in seconds: 10
+27.04.2017 16:46:51: Creating CheckEventsSystem
+27.04.2017 16:46:51: Creating connection to FBBase: 172.16.166.2:nnkk
+27.04.2017 16:46:51: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 16:47:34: Starting, cycle interval in seconds: 10
+27.04.2017 16:47:35: Creating CheckEventsSystem
+27.04.2017 16:47:35: Creating connection to FBBase: 172.16.166.2:nnkk
+27.04.2017 16:47:35: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 16:48:37: Starting, cycle interval in seconds: 10
+27.04.2017 16:48:37: Creating CheckEventsSystem
+27.04.2017 16:48:37: Creating connection to FBBase: 172.16.166.2:nnkk
+27.04.2017 16:48:37: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 16:48:48: Creating notification: ipAddress: 172.16.166.12 misPID: 7364
+Title: Внимание!
+Body: Сотрудникам СПАО 'Ингосстрах' Вы можете предложить реабилитационно - восстановительное лечение в Сочи
+ColorExclamationBlinking: 7DD474
+ColorMain: DCFFD8
+27.04.2017 16:51:17: Starting, cycle interval in seconds: 10
+27.04.2017 16:51:17: Creating CheckEventsSystem
+27.04.2017 16:51:17: Creating connection to FBBase: 172.16.166.2:nnkk
+27.04.2017 16:51:17: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 16:51:38: Creating notification: ipAddress: 172.16.166.12 misPID: 7364
+Title: Внимание!
+Body: Сотрудникам СПАО 'Ингосстрах' Вы можете предложить реабилитационно - восстановительное лечение в Сочи
+ColorExclamationBlinking: E086DB
+ColorMain: FFD5FD
+27.04.2017 16:55:39: Starting, cycle interval in seconds: 10
+27.04.2017 16:55:39: Creating CheckEventsSystem
+27.04.2017 16:55:40: Creating connection to FBBase: 172.16.166.2:nnkk
+27.04.2017 16:55:40: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 16:55:50: Creating notification: ipAddress: 172.16.166.12 misPID: 7364
+Title: Внимание!
+Body: Сотрудникам СПАО 'Ингосстрах' Вы можете предложить реабилитационно - восстановительное лечение в Сочи
+ColorExclamationBlinking: 7DD474
+ColorMain: DCFFD8
+27.04.2017 16:57:40: Starting, cycle interval in seconds: 10
+27.04.2017 16:57:40: Creating CheckEventsSystem
+27.04.2017 16:57:40: Creating connection to FBBase: 172.16.166.2:nnkk
+27.04.2017 16:57:40: Creating connection to FBBase: 172.16.166.12:c:\temp\notification.fdb
+27.04.2017 16:58:01: Creating notification: ipAddress: 172.16.166.12 misPID: 7364
+Title: Внимание!
+Body: Сотрудникам СПАО 'Ингосстрах'
+Вы можете предложить реабилитационно - восстановительное лечение в Сочи
+ColorExclamationBlinking: 7DD474
+ColorMain: DCFFD8
+27.04.2017 17:17:49: Creating notification: ipAddress: 172.16.166.12 misPID: 7364
+Title: Внимание!
+Body: Сотрудникам СПАО 'Ингосстрах'
+Вы можете предложить реабилитационно - восстановительное лечение в Сочи
+ColorExclamationBlinking: 7DD474
+ColorMain: DCFFD8

@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SecondMonServer.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="MIS_BASE_IP_ADDRESS" Type="System.String" Scope="User">
+      <Value Profile="(Default)">172.16.166.2</Value>
+    </Setting>
+    <Setting Name="MIS_BASE_NAME" Type="System.String" Scope="User">
+      <Value Profile="(Default)">nnkk</Value>
+    </Setting>
+    <Setting Name="CYCLE_INTERVAL_SECONDS" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="NOTIFICATION_BASE_IP_ADDRESS" Type="System.String" Scope="User">
+      <Value Profile="(Default)">172.16.166.12</Value>
+    </Setting>
+    <Setting Name="NOTIFICATION_BASE_NAME" Type="System.String" Scope="User">
+      <Value Profile="(Default)">c:\temp\notification.fdb</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

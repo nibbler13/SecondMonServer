@@ -2,34 +2,64 @@
 using System.Drawing;
 
 namespace SecondMonServer {
+
+	[Serializable]
 	class Notification {
-		public enum AvailableTypes { bday, child }
+		public enum AvailableTypes { sochi, child }
 
 		private string title;
 		private string body;
-		private Color exclamation;
-		private Color main;
+		private string colorExclamationBlinking;
+		private string colorMain;
 
 		public Notification(AvailableTypes type) {
-			if (type == AvailableTypes.bday) {
-				title = "День рождения";
-				body = "У текущего пациента день рождения находится в промежутке +/- 7 дней\n" + 
-					"Не забудьте поставить скидку 10% в лечениях за наличный расчет";
-				exclamation = Color.FromArgb(10, 10, 10);
-				main = Color.FromArgb(100, 100, 100);
+			if (type == AvailableTypes.sochi) {
+				title = "Внимание!";
+				body = "Сотрудникам СПАО 'Ингосстрах'" + Environment.NewLine + "Вы можете предложить " +
+					"реабилитационно - восстановительное лечение в Сочи";
+				colorExclamationBlinking = ConvertColorToHtml(Color.FromArgb(125, 212, 116));
+				colorMain = ConvertColorToHtml(Color.FromArgb(220, 255, 216));
 			} else if (type == AvailableTypes.child) {
 				title = "Несовершеннолетние дети";
-				body = "У текущего пациента есть дети в возрасте до 18 лет\n" +
+				body = "У текущего пациента есть дети в возрасте до 18 лет. " +
 					"Можно предложить оформить справку в бассейн";
-				exclamation = Color.FromArgb(10, 50, 10);
-				main = Color.FromArgb(100, 200, 100);
+				colorExclamationBlinking = ConvertColorToHtml(Color.FromArgb(224, 134, 219));
+				colorMain = ConvertColorToHtml(Color.FromArgb(255, 213, 253));
 			} else {
-				throw new ArgumentException("not available type");
+				Console.WriteLine("public Notification(AvailableTypes type) - not available type");
+				title = "";
+				body = "";
+				colorExclamationBlinking = "ffffff";
+				colorMain = "ffffff";
 			}
 		}
 
+		public string GetTitle() {
+			return title;
+		}
+
+		public string GetBody() {
+			return body;
+		}
+
+		public string GetColorExclamationBlinking() {
+			return colorExclamationBlinking;
+		}
+
+		public string GetColorMain() {
+			return colorMain;
+		}
+
+		private string ConvertColorToHtml(Color color) {
+			string htmlColor = ColorTranslator.ToHtml(color);
+			return htmlColor.Remove(0, 1);
+		}
+
 		public override string ToString() {
-			return title + "|" + body + "|" + exclamation.ToArgb().ToString() + "|" + main.ToArgb().ToString();
+			return "Title: " + title + Environment.NewLine +
+				"Body: " + body + Environment.NewLine +
+				"ColorExclamationBlinking: " + colorExclamationBlinking + Environment.NewLine +
+				"ColorMain: " + colorMain;
 		}
 	}
 }
