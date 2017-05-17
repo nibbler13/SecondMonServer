@@ -11,8 +11,11 @@ namespace SecondMonServer {
 		private string body;
 		private string colorExclamationBlinking;
 		private string colorMain;
+		private string colorFont;
 
 		public Notification(AvailableTypes type) {
+			colorFont = ConvertColorToHtml(Color.FromArgb(100, 100, 100));
+
 			if (type == AvailableTypes.sochi) {
 				title = "Внимание!";
 				body = "Сотрудникам СПАО 'Ингосстрах'" + Environment.NewLine + "Вы можете предложить " +
@@ -50,6 +53,10 @@ namespace SecondMonServer {
 			return colorMain;
 		}
 
+		public String GetColorFont() {
+			return colorFont;
+		}
+
 		private string ConvertColorToHtml(Color color) {
 			string htmlColor = ColorTranslator.ToHtml(color);
 			return htmlColor.Remove(0, 1);
@@ -59,7 +66,8 @@ namespace SecondMonServer {
 			return "Title: " + title + Environment.NewLine +
 				"Body: " + body + Environment.NewLine +
 				"ColorExclamationBlinking: " + colorExclamationBlinking + Environment.NewLine +
-				"ColorMain: " + colorMain;
+				"ColorMain: " + colorMain + Environment.NewLine +
+				"ColorFont: " + colorFont;
 		}
 	}
 }

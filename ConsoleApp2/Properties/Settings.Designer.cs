@@ -25,7 +25,7 @@ namespace SecondMonServer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("172.16.166.2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("172.16.127.2")]
         public string MIS_BASE_IP_ADDRESS {
             get {
                 return ((string)(this["MIS_BASE_IP_ADDRESS"]));
@@ -37,7 +37,7 @@ namespace SecondMonServer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("nnkk")]
+        [global::System.Configuration.DefaultSettingValueAttribute("sretenka")]
         public string MIS_BASE_NAME {
             get {
                 return ((string)(this["MIS_BASE_NAME"]));
@@ -61,7 +61,7 @@ namespace SecondMonServer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("172.16.166.12")]
+        [global::System.Configuration.DefaultSettingValueAttribute("172.16.127.2")]
         public string NOTIFICATION_BASE_IP_ADDRESS {
             get {
                 return ((string)(this["NOTIFICATION_BASE_IP_ADDRESS"]));
@@ -73,7 +73,7 @@ namespace SecondMonServer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("c:\\temp\\notification.fdb")]
+        [global::System.Configuration.DefaultSettingValueAttribute("sretenka")]
         public string NOTIFICATION_BASE_NAME {
             get {
                 return ((string)(this["NOTIFICATION_BASE_NAME"]));

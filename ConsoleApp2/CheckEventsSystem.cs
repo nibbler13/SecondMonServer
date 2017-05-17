@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading;
 
 namespace SecondMonServer {
 	class CheckEventsSystem {
@@ -24,20 +25,34 @@ namespace SecondMonServer {
 			"UPDATE SecondMon SET Send = @updateCode WHERE smonid = @smonId";
 
 		private const string QUERY_INSERT_NOTIFICATION =
-			"INSERT INTO NOTIFICATIONS " +
-			"(IPADDRESS, MISPID, TITLE, TEXT, COLOREXT, COLORMAIN, TREATCODE) " +
-			"VALUES(@ipaddress, @mispid, @title, @text, @colorext, @colormain, @treatcode)";
+			"INSERT INTO SECONDMONNOTIFICATIONS " +
+			"(IPADDRESS, MISPID, TITLE, TEXT, COLOREXT, COLORMAIN, COLORFONT, TREATCODE) " +
+			"VALUES(@ipaddress, @mispid, @title, @text, @colorext, @colormain, @colorfont, @treatcode)";
+
+		//private const string QUERY_EVENT_SOCHI =
+		//	"SELECT IIF(sum(flag) = 2, 1, 0) FROM " +
+		//	"(SELECT COALESCE(IIF(t.jid = 1990017642, 1, 0), 0) AS flag " +
+		//	"FROM treat t " +
+		//	"LEFT JOIN JPAGREEMENT jp ON t.JID = jp.AGRID WHERE t.treatcode = @treatcode " +
+		//	"UNION ALL " +
+		//	"SELECT COALESCE(IIF(t.depnum IN (991328713, 742, 741, 765), 1, 0), 0) AS flag1 " +
+		//	"FROM treat t " +
+		//	"LEFT JOIN JPAGREEMENT jp ON t.JID = jp.AGRID WHERE t.treatcode = @treatcode)";
 
 		private const string QUERY_EVENT_SOCHI =
-			"SELECT IIF(sum(flag) = 2, 1, 0) FROM " +
-			"(SELECT COALESCE(IIF(t.jid = 1990017642, 1, 0), 0) AS flag " +
-			"FROM treat t " +
-			"LEFT JOIN JPAGREEMENT jp ON t.JID = jp.AGRID WHERE t.treatcode = @treatcode " +
-			"UNION ALL " +
-			"SELECT COALESCE(IIF(t.depnum IN (991328713, 742, 741, 765), 1, 0), 0) AS flag1 " +
-			"FROM treat t " +
-			"LEFT JOIN JPAGREEMENT jp ON t.JID = jp.AGRID WHERE t.treatcode = @treatcode)";
-
+			"select iif(sum(flag) = 2, 1, 0) from " +
+			//«ПОЛИКЛИНИКА(КЛАССИЧЕСКАЯ)» для сотрудников ОСАО «Ингосстрах» и их детей до 16 лет(ИНГОСС-МОСКВА)
+			//«ПОЛИКЛИНИКА(КЛАССИЧЕСКАЯ)» для руководителей ОСАО «Ингосстрах» высшего звена  и членов их семей(ИНГОСС-МОСКВА)
+			//«ПОЛИКЛИНИКА(КЛАССИЧЕСКАЯ)» для руководителей структурных подразделений  ОСАО «Ингосстрах» и их детей до 16 лет(ИНГОСС-МОСКВА)
+			"(select COALESCE (iif(t.lstid in (991313949,991333024,991336874), 1, 0),0) as flag " +
+			"from treat t " +
+			"left join JPAGREEMENT jp on t.JID = jp.AGRID where t.treatcode = @treatcode " +
+			"union all " +
+			//'ОТОРИНОЛАРИНГОЛОГИЯ','НЕВРОЛОГИЯ','ТРАВМАТОЛОГИЯ','КАРДИОЛОГИЯ'
+			"select COALESCE (iif(t.depnum in (991328713,742,741,765), 1, 0),0) as flag1 " +
+			"from treat t " +
+			"left join JPAGREEMENT jp on t.JID = jp.AGRID where t.treatcode = @treatcode)";
+		
 		private FBClient misBase;
 		private FBClient notificationBase;
 
@@ -51,6 +66,13 @@ namespace SecondMonServer {
 			notificationBase = new FBClient(
 				Properties.Settings.Default.NOTIFICATION_BASE_IP_ADDRESS,
 				Properties.Settings.Default.NOTIFICATION_BASE_NAME);
+		}
+
+		public void StartChecking() {
+			while (true) {
+				CheckEvents();
+				Thread.Sleep(Properties.Settings.Default.CYCLE_INTERVAL_SECONDS * 1000);
+			}
 		}
 
 		public void CheckEvents() {
@@ -127,6 +149,7 @@ namespace SecondMonServer {
 				{"@text", notification.GetBody()},
 				{"@colorext", notification.GetColorExclamationBlinking()},
 				{"@colormain", notification.GetColorMain()},
+				{"@colorfont", notification.GetColorFont() },
 				{"@treatcode", treatCode}};
 
 			notificationBase.ExecuteUpdateQuery(QUERY_INSERT_NOTIFICATION, parameters);
