@@ -6,3 +6,11 @@
 \\nnkk-fs\doks\nn-admin\Мои документы\Visual Studio 2017\Projects\SecondMonServer\ConsoleApp2\obj\Release\SecondMonServer.csprojResolveAssemblyReference.cache
 \\nnkk-fs\doks\nn-admin\Мои документы\Visual Studio 2017\Projects\SecondMonServer\ConsoleApp2\obj\Release\SecondMonServer.exe
 \\nnkk-fs\doks\nn-admin\Мои документы\Visual Studio 2017\Projects\SecondMonServer\ConsoleApp2\obj\Release\SecondMonServer.pdb
+C:\_Projects C#\SecondMonServer\ConsoleApp2\bin\Release\SecondMonServer.exe.config
+C:\_Projects C#\SecondMonServer\ConsoleApp2\bin\Release\SecondMonServer.exe
+C:\_Projects C#\SecondMonServer\ConsoleApp2\bin\Release\SecondMonServer.pdb
+C:\_Projects C#\SecondMonServer\ConsoleApp2\bin\Release\FirebirdSql.Data.FirebirdClient.dll
+C:\_Projects C#\SecondMonServer\ConsoleApp2\bin\Release\FirebirdSql.Data.FirebirdClient.pdb
+C:\_Projects C#\SecondMonServer\ConsoleApp2\obj\Release\SecondMonServer.csprojResolveAssemblyReference.cache
+C:\_Projects C#\SecondMonServer\ConsoleApp2\obj\Release\SecondMonServer.exe
+C:\_Projects C#\SecondMonServer\ConsoleApp2\obj\Release\SecondMonServer.pdb

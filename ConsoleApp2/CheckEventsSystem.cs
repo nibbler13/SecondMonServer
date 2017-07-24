@@ -5,6 +5,9 @@ using System.Threading;
 
 namespace SecondMonServer {
 	class CheckEventsSystem {
+		private int previousDay = 0;
+		private const string QUERY_DELETE_OLD_EVENTS = "DELETE FROM secondmon WHERE CAST (creatdate AS DATE)  < 'today'";
+
 		private const string QUERY_GET_NEW_EVENTS =
 			"SELECT smonid, pcode, treatcode, addr, pid " +
 			"FROM (SELECT sm.*, s.treatcode AS streatcode, s.treatcomplete, " +
@@ -28,16 +31,6 @@ namespace SecondMonServer {
 			"INSERT INTO SECONDMONNOTIFICATIONS " +
 			"(IPADDRESS, MISPID, TITLE, TEXT, COLOREXT, COLORMAIN, COLORFONT, TREATCODE) " +
 			"VALUES(@ipaddress, @mispid, @title, @text, @colorext, @colormain, @colorfont, @treatcode)";
-
-		//private const string QUERY_EVENT_SOCHI =
-		//	"SELECT IIF(sum(flag) = 2, 1, 0) FROM " +
-		//	"(SELECT COALESCE(IIF(t.jid = 1990017642, 1, 0), 0) AS flag " +
-		//	"FROM treat t " +
-		//	"LEFT JOIN JPAGREEMENT jp ON t.JID = jp.AGRID WHERE t.treatcode = @treatcode " +
-		//	"UNION ALL " +
-		//	"SELECT COALESCE(IIF(t.depnum IN (991328713, 742, 741, 765), 1, 0), 0) AS flag1 " +
-		//	"FROM treat t " +
-		//	"LEFT JOIN JPAGREEMENT jp ON t.JID = jp.AGRID WHERE t.treatcode = @treatcode)";
 
 		private const string QUERY_EVENT_SOCHI =
 			"select iif(sum(flag) = 2, 1, 0) from " +
@@ -72,18 +65,21 @@ namespace SecondMonServer {
 			while (true) {
 				CheckEvents();
 				Thread.Sleep(Properties.Settings.Default.CYCLE_INTERVAL_SECONDS * 1000);
+				if (DateTime.Now.Day != previousDay)
+					misBase.ExecuteUpdateQuery(QUERY_DELETE_OLD_EVENTS, new Dictionary<string, string>());
+				previousDay = DateTime.Now.Day;
 			}
 		}
 
 		public void CheckEvents() {
-			Console.WriteLine("--- checking main table at: " + DateTime.Now.ToString());
+			LoggingSystem.LogMessageToFile("--- checking main table");
 
 			DataTable newEventsTable = misBase.GetDataTable(
 				QUERY_GET_NEW_EVENTS, 
 				new Dictionary<string, string>());
 
 			if (newEventsTable == null || newEventsTable.Rows.Count == 0) {
-				Console.WriteLine("--- no new events");
+				LoggingSystem.LogMessageToFile("--- no new events");
 				return;
 			}
 
@@ -107,13 +103,12 @@ namespace SecondMonServer {
 			} catch (Exception e) {
 				LoggingSystem.LogMessageToFile("Cannod read the row: " + row.ToString() + " | " + 
 					e.Message + " " + e.StackTrace);
-				return;
 			}
 			
-			Console.WriteLine("--- check row: " + id + " " + pCode + " " + ipAddress);
+			LoggingSystem.LogMessageToFile("--- check row: " + id + " " + pCode + " " + ipAddress);
 
 			Dictionary<string, string> parameters = new Dictionary<string, string>() {
-				{"@treatcode", treatCode}};
+				{ "@treatcode", treatCode }};
 			DataTable queryResult = misBase.GetDataTable(QUERY_EVENT_SOCHI, parameters);
 			if (queryResult != null && queryResult.Rows.Count > 0) {
 				try {
@@ -121,7 +116,8 @@ namespace SecondMonServer {
 					if (!result.Equals("0"))
 						CreateNotification(ipAddress, misPid, treatCode, Notification.AvailableTypes.sochi);
 				} catch (Exception e) {
-					Console.WriteLine("");
+					LoggingSystem.LogMessageToFile(e.Message + Environment.NewLine +
+						e.StackTrace);
 				}
 			}
 			
@@ -133,7 +129,8 @@ namespace SecondMonServer {
 				{"@updateCode", "1"},
 				{"@smonId", id}};
 
-			misBase.ExecuteUpdateQuery(QUERY_UPDATE, parameters);
+			LoggingSystem.LogMessageToFile("UpdateRowStatus, rowID: " + id + ", result: " + 
+				misBase.ExecuteUpdateQuery(QUERY_UPDATE, parameters));
 		}
 
 		private void CreateNotification(string ipAddress, string misPid, string treatCode, Notification.AvailableTypes type) {
@@ -141,6 +138,12 @@ namespace SecondMonServer {
 			LoggingSystem.LogMessageToFile("Creating notification: " + 
 				"ipAddress: " + ipAddress + " misPID: " + misPid +
 				Environment.NewLine + notification.ToString());
+
+			if (string.IsNullOrEmpty(ipAddress) ||
+				string.IsNullOrEmpty(misPid) || string.IsNullOrEmpty(treatCode)) {
+				LoggingSystem.LogMessageToFile("CreateNotification - некоторые параметры пусты");
+				return;
+			}
 
 			Dictionary<string, string> parameters = new Dictionary<string, string>() {
 				{"@ipaddress", ipAddress},
@@ -152,7 +155,8 @@ namespace SecondMonServer {
 				{"@colorfont", notification.GetColorFont() },
 				{"@treatcode", treatCode}};
 
-			notificationBase.ExecuteUpdateQuery(QUERY_INSERT_NOTIFICATION, parameters);
+			LoggingSystem.LogMessageToFile("Create notification status: " +
+				notificationBase.ExecuteUpdateQuery(QUERY_INSERT_NOTIFICATION, parameters));
 		}
 	}
 }

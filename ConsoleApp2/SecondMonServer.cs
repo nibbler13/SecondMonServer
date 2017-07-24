@@ -36,12 +36,14 @@ namespace SecondMonServer{
 			LoggingSystem.LogMessageToFile("Starting, cycle interval in seconds: " +
 				Properties.Settings.Default.CYCLE_INTERVAL_SECONDS);
 			CheckEventsSystem checkEventSystem = new CheckEventsSystem();
+
 			Thread thread = new Thread(() => checkEventSystem.StartChecking());
 			thread.Start();
 		}
 
 		private static void Stop() {
-
+			LoggingSystem.LogMessageToFile("Stopping");
+			Environment.Exit(0);
 		}
     }
 }

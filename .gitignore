@@ -52,3 +52,4 @@ Temporary Items
 *.exe
 *.cache
 *.pdb
+.vs/SecondMonServer/v15/.suo
